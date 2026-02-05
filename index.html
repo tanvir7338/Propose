@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Proposal</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  height:100vh;
+  font-family:'Poppins','Arial',sans-serif;
+  background:linear-gradient(to bottom,#D3A373,#FEF9E1,#CDD5AE);
+  overflow:hidden;
+}
+.phase{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:1s ease}
+.hidden{opacity:0;pointer-events:none;transform:scale(1.05)}
+audio{display:none}
+
+/* Floating hearts */
+.heart{position:absolute;width:16px;height:16px;background:#D3A373;transform:rotate(45deg);animation:floatUp 6s linear infinite;}
+.heart:before,.heart:after{content:'';position:absolute;width:16px;height:16px;background:#D3A373;border-radius:50%;}
+.heart:before{top:-8px} .heart:after{left:-8px}
+@keyframes floatUp{from{bottom:-10%;opacity:1}to{bottom:110%;opacity:0}}
+
+/* Phase 1 */
+.hero{background:#FAEDCD;padding:50px;border-radius:50px;display:flex;gap:40px;align-items:center;box-shadow:0 40px 80px rgba(0,0,0,.2);cursor:pointer;}
+.hero h1{font-size:60px;color:#D3A373;font-weight:700;}
+.hero img{width:220px}
+
+/* Phase 2 */
+.grid{display:grid;grid-template-columns:repeat(2,170px);gap:35px;}
+.envelope{width:170px;height:115px;background:#E9EDCA;border-radius:18px;position:relative;cursor:pointer;box-shadow:0 20px 40px rgba(0,0,0,.15);}
+.envelope:before{content:'';position:absolute;inset:0;background:#CDD5AE;clip-path:polygon(0 0,100% 0,50% 60%);}
+.envelope span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;color:#6b4f2c;font-weight:600;}
+
+/* Phase 3 - EXPANDED LETTER AREA */
+.book{width:95%;max-width:1100px;height:650px;perspective:2000px;}
+.page{width:100%;height:100%;background:#FEF9E1;border-radius:30px;display:flex;box-shadow:0 30px 80px rgba(0,0,0,.2);transform-origin:left;animation:pageTurn 1.2s ease;}
+@keyframes pageTurn{from{transform:rotateY(-90deg)}to{transform:rotateY(0)}}
+.page .text{width:50%;padding:50px;color:#6b4f2c;display:flex;flex-direction:column;justify-content:center;}
+.page .text h2{font-size:32px;color:#D3A373;margin-bottom:20px;font-weight:600;}
+.page .text p{font-size:16px;line-height:1.8;}
+.page .image{width:50%;display:flex;align-items:center;justify-content:center;padding:30px;}
+.page .image img{width:100%;max-height:100%;object-fit:contain;border-radius:20px;}
+
+.back-btn{position:absolute;bottom:20px;left:30px;padding:10px 24px;border:none;border-radius:30px;background:#D3A373;color:#FEF9E1;cursor:pointer;font-size:14px;font-weight:500;font-family:'Poppins','Arial',sans-serif;}
+
+/* Proposal popup */
+.popup{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;}
+.popup-box{background:#FEF9E1;padding:40px;border-radius:40px;text-align:center;width:90%;max-width:420px;animation:fadeScale 1s ease;}
+@keyframes fadeScale{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+.propose-img{width:100%;border-radius:30px;margin-bottom:20px;box-shadow:0 20px 50px rgba(0,0,0,.25);}
+.popup-box h1{font-size:28px;color:#D3A373;font-weight:600;}
+.ring{width:90px;margin:15px 0;opacity:0;transform:scale(0);}
+.ring.show{animation:ringPop 1.2s ease forwards;}
+@keyframes ringPop{to{opacity:1;transform:scale(1)}}
+.magnetic-btn{margin-top:20px;padding:14px 40px;border:none;border-radius:45px;background:linear-gradient(135deg,#D3A373,#FAEDCD);font-size:15px;font-weight:600;cursor:pointer;font-family:'Poppins','Arial',sans-serif;}
+
+/* Final slide */
+.final{flex-direction:column;animation:fadeIn 1.5s ease;}
+.final img{width:300px;border-radius:40px;box-shadow:0 30px 70px rgba(0,0,0,.25);}
+.final h2{margin-top:25px;font-size:30px;color:#D3A373;font-weight:600;}
+@keyframes fadeIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+  <source src=" https://files.catbox.moe/wr5j42.mp3 ">
+</audio>
+
+<!-- Phase 1 -->
+<div id="p1" class="phase">
+  <div class="hero" onclick="openGrid()">
+    <h1>LOVE</h1>
+    <img src="  https://raw.githubusercontent.com/tanvir7338/Love-greating-card/3863b46083f74b34c93c5606401d9e0a45bf118b/characters%20show%20love%20and%20passion%20for%20each%20other%20you%20can%20probably%20draw%20and%20animate%20a%20gif%20like%20this%20_).gif">
+  </div>
+</div>
+
+<!-- Phase 2 -->
+<div id="p2" class="phase hidden">
+  <div class="grid">
+    <div class="envelope" onclick="openLetter(1)"><span>💖💌🌸</span></div>
+    <div class="envelope" onclick="openLetter(2)"><span>💖🌷💌</span></div>
+    <div class="envelope" onclick="openLetter(3)"><span>🌹💞❤️</span></div>
+    <div class="envelope" onclick="openLetter(4)"><span>💕🌹💌</span></div>
+  </div>
+</div>
+
+<!-- Phase 3 -->
+<div id="p3" class="phase hidden">
+  <div class="book">
+    <div class="page">
+      <div class="text">
+        <h2 id="title"></h2>
+        <p id="message"></p>
+      </div>
+      <div class="image">
+        <img id="img">
+      </div>
+    </div>
+    <button class="back-btn" onclick="backToLetters()">Back</button>
+  </div>
+</div>
+
+<!-- Proposal Popup -->
+<div id="popup" class="popup hidden">
+  <div class="popup-box">
+    <img src="  https://raw.githubusercontent.com/tanvir7338/Love-greating-card/3863b46083f74b34c93c5606401d9e0a45bf118b/Love.jpeg " class="propose-img">
+    <h1>Will You Be My Girlfriend?</h1>
+    <img src="  " class="ring" id="ring">
+    <button class="magnetic-btn" onclick="acceptProposal()">Yes, Forever</button>
+  </div>
+</div>
+
+<!-- Final Slide -->
+<div id="final" class="phase hidden final">
+  <img src="https://raw.githubusercontent.com/tanvir7338/Love-greating-card/9bffb5b1c835fa9619ae541d30cd6e59efb7a9f1/Thank%20You%20Thanks%20GIF%20-%20Thank%20You%20Thanks%20Hearts%20-%20Discover%20%26%20Share%20GIFs.gif">
+  <h2>Thank you 💞</h2>
+</div>
+
+<script>
+/* Floating Hearts */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.style.left=Math.random()*100+"%";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},800);
+
+const music = document.getElementById("music");
+
+function openGrid(){
+  music.play();
+  p1.classList.add("hidden");
+  p2.classList.remove("hidden");
+}
+
+function openLetter(n){
+  const data = {
+    1:[
+      "My Love",
+      "Kaise kahun kitna chaha hai tujhe, Har dua mein bas manga hai tujhe.Jo kehne baithu toh khud ko bhula baithun, Aur alfaazon mein har raat bhool jaun...💖",
+      "https://raw.githubusercontent.com/tanvir7338/Love-greating-card/25bc9920779da1bf8f39f0289e8f60cb8e10e683/74f49f6c-2fff-49eb-8fa1-bbcec832d70f.jpeg"
+    ],
+    2:[
+      "My World",
+      "dooriyon se farak nahi padta baat dilon ki nazdikiyon se hoti hai. ♥️ dil ke ristey to kismat se bantey hai warna mulaqat toh na jaane kitno se hoti hai..!!",
+      "https://raw.githubusercontent.com/tanvir7338/Love-greating-card/25bc9920779da1bf8f39f0289e8f60cb8e10e683/Screenshot_2026-02-04-19-53-24-28_40deb401b9ffe8e1df2f1cc5ba480b12.jpg"
+    ],
+    3:[
+      "My Forever",
+      "Ek😍Sukoon Sa Milta😘Hai Is♥️Dil Ko jaab😜Bhi Meri👨‍❤️‍💋‍👨Tumse Baat🙈Hoti Hai.",
+      "https://raw.githubusercontent.com/tanvir7338/Love-greating-card/9bffb5b1c835fa9619ae541d30cd6e59efb7a9f1/1a93fce8-895e-4bf0-a2dd-c40c91243c63.jpeg"
+    ],
+    4:[
+      "My Life",
+      "Sitaron se bhari raatein pasand hain Mujhe tumhari baatein pasand hain, Yun toh mujhe pasand hain chand bhi Lekin usse zyada mujhe tumari aankhein pasand hain!🌸🤍 ",
+      "https://raw.githubusercontent.com/tanvir7338/Love-greating-card/9bffb5b1c835fa9619ae541d30cd6e59efb7a9f1/74f49f6c-2fff-49eb-8fa1-bbcec832d70f.jpeg"
+    ]
+  };
+
+  title.innerText = data[n][0];
+  message.innerText = data[n][1];
+  img.src = data[n][2];
+
+  p2.classList.add("hidden");
+  p3.classList.remove("hidden");
+  if(n === 4) setTimeout(()=>popup.classList.remove("hidden"),1500);
+}
+
+function backToLetters(){
+  p3.classList.add("hidden");
+  popup.classList.add("hidden");
+  p2.classList.remove("hidden");
+}
+
+function acceptProposal(){
+  ring.classList.add("show");
+  setTimeout(()=>{
+    popup.classList.add("hidden");
+    p3.classList.add("hidden");
+    final.classList.remove("hidden");
+  },1200);
+}
+</script>
+
+</body>
+</html>
